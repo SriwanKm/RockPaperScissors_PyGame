@@ -1,68 +1,115 @@
 import random
-weapons = ['Rock', 'Paper', 'Scissors']
-# print(weapons[random.randint(0, 2)])
+import time
 
+border = '''
+ ______________________________________________________                                      
+'''
+
+rock = '''
+    _______
+---'   ____)
+      (_____)
+      (_____)
+      (____)
+---.__(___)
+'''
+
+paper = '''
+    _______
+---'   ____)____
+          ______)
+          _______)
+         _______)
+---.__________)
+'''
+
+scissors = '''
+    _______
+---'   ____)____
+          ______)
+       __________)
+      (____)
+---.__(___)
+'''
+TWO_SECONDS = 2
+FIGHTS_BACK_TEXT = 'The opponent fights back with... '
+INPUT_MESSAGE = 'Type r, p, or s to fight with Rock, Paper, or Scissors: '
+YOUR_WEAPON_IS = 'Your weapon is '
+ROCK = 'Rock'
+PAPER = 'Paper'
+SCISSORS = 'Scissors'
+CURRENT = 'current'
+R = 'r'
+P = 'p'
+S = 's'
+FIRST_INDEX = 0
+THIRD_INDEX = 2
+weapons = [ROCK, PAPER, SCISSORS]
+ascii_art = {
+    ROCK: rock,
+    PAPER: paper,
+    SCISSORS: scissors
+}
 
 print('Welcome to Rock-Paper-Scissors Game!')
-start = input('Type r, p, or s to fight with Rock, Paper, or Scissors: ')
 
-
+start = input(INPUT_MESSAGE)
 
 player_history = {
-    "Rock": 0,
-    "Paper": 0,
-    "Scissors": 0
+    ROCK: 0,
+    PAPER: 0,
+    SCISSORS: 0
 }
 
 opponent_output = {
-    "current": ""
+    CURRENT: ""
 }
 
 
 def opp_output():
     max_weapon = max(player_history, key=player_history.get)
-    if player_history.get('Rock') == player_history.get('Paper') == player_history.get('Scissors'):
-        opponent_output['current'] = weapons[random.randint(0, 2)]
-    elif max_weapon == 'Rock':
-        opponent_output['current'] = 'Paper'
-        # print('The opponent fight back with', 'PAPER!')
-    elif max_weapon == 'Paper':
-        opponent_output['current'] = 'Scissors'
-        # print('The opponent fight back with', 'SCISSORS!')
-    elif max_weapon == 'Scissors':
-        opponent_output['current'] = 'Rock'
-        # print('The opponent fight back with', 'ROCK!')
-    return opponent_output['current']
+    if player_history[ROCK] == player_history[PAPER] == player_history[SCISSORS]:
+        opponent_output[CURRENT] = ascii_art[weapons[random.randint(FIRST_INDEX, THIRD_INDEX)]]
+    elif max_weapon == ROCK:
+        opponent_output[CURRENT] = paper
+    elif max_weapon == PAPER:
+        opponent_output[CURRENT] = scissors
+    elif max_weapon == SCISSORS:
+        opponent_output[CURRENT] = rock
+    return opponent_output[CURRENT]
 
 
 def print_opp_output():
-    print('The opponent fight back with', opp_output())
-
+    return opp_output()
 
 
 def add_to_history(user_input):
-    print_opp_output()
-    if user_input == 'r':
-        player_history['Rock'] += 1
-        print('Your weapon is ROCK')
-    elif user_input == 'p':
-        player_history['Paper'] += 1
-        print('Your weapon is PAPER')
+    enemy_move_text = print_opp_output()
+
+    if user_input == R:
+        player_history[ROCK] += 1
+        print(YOUR_WEAPON_IS + rock)
+    elif user_input == P:
+        player_history[PAPER] += 1
+        print(YOUR_WEAPON_IS + paper)
     else:
-        player_history['Scissors'] += 1
-        print('Your weapon is SCISSORS')
+        player_history[SCISSORS] += 1
+        print(YOUR_WEAPON_IS + scissors)
+    print(FIGHTS_BACK_TEXT)
+    time.sleep(TWO_SECONDS)
+    print(enemy_move_text)
     print(player_history)
-    reprint = input('Type r, p, or s to fight with Rock, Paper, or Scissors: ')
+    print(border)
+    reprint = input(INPUT_MESSAGE)
     validate_input(reprint)
 
 
 def validate_input(game_input):
-    if game_input.lower() != 'r' and game_input.lower() != 'p' and game_input.lower() != 's':
-        reprint = input('Type r, p, or s to fight with Rock, Paper, or Scissors: ')
+    if game_input.lower() != R and game_input.lower() != P and game_input.lower() != S:
+        reprint = input(INPUT_MESSAGE)
         validate_input(reprint)
     else:
         add_to_history(game_input.lower())
 
 
 validate_input(start)
-
