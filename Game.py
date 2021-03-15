@@ -1,36 +1,7 @@
 import random
 import time
+from ascii_art import *
 
-border = '''
- ______________________________________________________                                      
-'''
-
-rock = '''
-    _______
----'   ____)
-      (_____)
-      (_____)
-      (____)
----.__(___)
-'''
-
-paper = '''
-    _______
----'   ____)____
-          ______)
-          _______)
-         _______)
----.__________)
-'''
-
-scissors = '''
-    _______
----'   ____)____
-          ______)
-       __________)
-      (____)
----.__(___)
-'''
 TWO_SECONDS = 2
 FIGHTS_BACK_TEXT = 'The opponent fights back with... '
 INPUT_MESSAGE = 'Type r, p, or s to fight with Rock, Paper, or Scissors: '
